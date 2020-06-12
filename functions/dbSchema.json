@@ -1,0 +1,30 @@
+{
+ "users": {
+    "user1uid":{
+        "email": "user1@email.com",
+        "text": {
+            "clip1": {
+                "body": "user1 clip1 body",
+                "uploadedOn": "2020-05-20T15:06:57.533Z"
+            },
+            "clip2": {
+                "body": "user1 clip2 body",
+                "uploadedOn": "2020-05-23T15:06:57.533Z"
+            }
+        }
+    },
+    "user2uid":{
+        "email": "user2@email.com",
+        "text": {
+            "clip1": {
+                "body": "user2 clip1 body",
+                "uploadedOn": "2020-05-20T15:06:57.533Z"
+            },
+            "clip2": {
+                "body": "user2 clip2 body",
+                "uploadedOn": "2020-05-23T15:06:57.533Z"
+            }
+        }
+    }
+ }
+}
