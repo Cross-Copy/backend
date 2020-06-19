@@ -6,8 +6,8 @@ app.use(cors({origin: true}));
 
 const { admin } = require ("./util/admin");
 
-const { getAllTextClips, addTextClip, deleteTextClip } = require('./handlers/text-clips');
-const { getAllImageClips, addImageClip, deleteImageClip } =require('./handlers/image-clips');
+const { getAllTextSnips, addTextSnip, updateTextSnip, deleteTextSnip } = require('./handlers/text-snips');
+const { getAllImageSnips, addImageSnip, deleteImageSnip } =require('./handlers/image-snips');
 const { signUp, login, getAllOnAUser} = require('./handlers/users');
 const FBAuth = require ('./util/auth');
 
@@ -17,27 +17,28 @@ app.post("/login", login);
 
 app.get("/user/all", FBAuth, getAllOnAUser);
 
-// Text Clip Routes
-app.get("/text", FBAuth, getAllTextClips);
-app.post("/text", FBAuth, addTextClip);
-app.delete("/text/:clipId", FBAuth, deleteTextClip);
+// Text Snip Routes
+app.get("/text/:workspace", FBAuth, getAllTextSnips);
+app.post("/text/:workspace", FBAuth, addTextSnip);
+app.patch("/text/:workspace/:snipId", FBAuth, updateTextSnip);
+app.delete("/text/:workspace/:snipId", FBAuth, deleteTextSnip);
 
-//Image Clip Routes
-app.get("/image", FBAuth, getAllImageClips)
-app.post("/image", FBAuth, addImageClip);
-app.delete("/image/:clipId", FBAuth, deleteImageClip);
+//Image Snip Routes
+app.get("/image/:workspace", FBAuth, getAllImageSnips)
+app.post("/image/:workspace", FBAuth, addImageSnip);
+app.delete("/image/:workspace/:snipId", FBAuth, deleteImageSnip);
 
 exports.api = functions.https.onRequest(app);
 
 exports.onDeleteImage = functions.firestore
-  .document('users/{uid}/image/{imageId}')
+  .document('users/{uid}/workspace/{workspace}/image/{imageId}')
   .onDelete((snap, context) => {
     console.log('DELETE DETECTED');
-    console.log(`////// ${context.params} ////////`);
-    const { imageId } = context.params;
+    console.log(`////// ${context.params.uid} ////////`);
+    const { uid, imageId } = context.params;
     const bucket = admin.storage().bucket();
 
-    const path = `images/${imageId}`;
+    const path = `${uid}/images/${imageId}`;
 
     return bucket.file(path).delete();
   });

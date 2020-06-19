@@ -1,27 +1,28 @@
 const { db, admin } = require ('../util/admin');
 const config = require("../util/config");
 
-exports.getAllImageClips = (req, res) => {
-    db.collection(`/users/${req.user.uid}/image`)
+exports.getAllImageSnips = (req, res) => {
+    db.collection(`/users/${req.user.uid}/workspace/${req.params.workspace}/image`)
     //.orderBy("uploadedOn", "desc")
     .get()
     .then((data) => {
-        let clippings = [];
+        let snippings = [];
         data.forEach((doc) => {
-          clippings.push({
-            clipId: doc.id,
+          snippings.push({
+            snipId: doc.id,
             imageUrl: doc.data().imageUrl,
             //imageName: doc.data().imageName,
             uploadedOn: doc.data().uploadedOn,
+            lastUpdatedOn: doc.data().lastUpdatedOn
           });
         });
-        return res.json(clippings);
+        return res.json(snippings);
     })
     .catch((err) => console.error(err));   
 };
 
 
-exports.addImageClip = (req, res) => {
+exports.addImageSnip = (req, res) => {
     const BusBoy = require ('busboy');
     const path = require ('path');
     const os = require ('os');
@@ -53,7 +54,7 @@ exports.addImageClip = (req, res) => {
     busboy.on('finish', () => {
         admin.storage().bucket().upload(image.filepath, {
             resumable: false,
-            destination: `images/${imageFileName}`,
+            destination: `${req.user.uid}/images/${imageFileName}`,
             metadata: {
                 metadata: {
                     contentType: image.mimetype
@@ -65,11 +66,14 @@ exports.addImageClip = (req, res) => {
             return db
             .collection('users')
             .doc(req.user.uid)
+            .collection('workspace')
+            .doc(req.params.workspace)
             .collection('image')
             .doc(imageFileName).set({ 
                 //imageName: imageFileName,
                 imageUrl, 
-                uploadedOn: new Date().toISOString() 
+                uploadedOn: new Date().toISOString(), 
+                lastUpdatedOn: new Date().toISOString()
             });
 
         })
@@ -86,18 +90,18 @@ exports.addImageClip = (req, res) => {
 };
 
 
-// DELETE Image Clip
-exports.deleteImageClip = (req, res) => {
-    const document = db.doc(`/users/${req.user.uid}/image/${req.params.clipId}`);
+// DELETE Image Snip
+exports.deleteImageSnip = (req, res) => {
+    const document = db.doc(`/users/${req.user.uid}/workspace/${req.params.workspace}/image/${req.params.SnipId}`);
     document.get()
     .then((doc) => {
       if (!doc.exists){
-        return res.status(404).json({ error: 'image clip not found' });
+        return res.status(404).json({ error: 'image snip not found' });
       }
       return document.delete();
     })
     .then(() => {
-      return res.json({ message: 'Image Clip deleted successfully' });
+      return res.json({ message: 'Image Snip deleted successfully' });
     })
     .catch(err => {
       console.error(err);

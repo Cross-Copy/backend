@@ -28,6 +28,8 @@ exports.signUp = (req, res) => {
       token = idToken;
       const userCred = {
         email: newUser.email,
+        darkTheme: false,
+        joinDate: new Date().toISOString()
       };
       return db.doc(`/users/${uid}`).set(userCred);
     })
@@ -86,7 +88,9 @@ exports.getAllOnAUser = (req, res) => {
   .get()
   .then((doc) => {
     if (doc.exists){
-      userData.email = doc.data();
+      userData.email = doc.data().email;
+      userData.darkTheme = doc.data().darkTheme;
+      userData.joinDate = doc.data().joinDate;
       //userData.text = doc.data().text;
       
     }

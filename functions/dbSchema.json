@@ -2,27 +2,55 @@
  "users": {
     "user1uid":{
         "email": "user1@email.com",
-        "text": {
-            "clip1": {
-                "body": "user1 clip1 body",
-                "uploadedOn": "2020-05-20T15:06:57.533Z"
+        "darkTheme": false,
+        "joinDate": "2020-05-20T18:46:59.887Z",
+        "workspace":{
+            "1": {
+                "text": {
+                    "snip1": {
+                        "body": "user1 snip1 body",
+                        "uid": "user1uid",
+                        "uploadedOn": "2020-05-20T15:06:57.533Z",
+                        "lastUpdatedOn": "2020-05-23T15:06:57.533Z"
+                    },
+                    "snip2": {
+                        "body": "user1 snip2 body",
+                        "uid": "user1uid",
+                        "uploadedOn": "2020-05-23T15:06:57.533Z",
+                        "lastUpdatedOn": "2020-05-23T15:06:57.533Z"
+                    }
+                },
+                "image": {
+                    "90000494820.jpg": {
+                        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipboard-2ef09.appspot.com/o/images/90000494820.jpg?alt=media",
+                        "uploadedOn": "2020-05-23T15:06:57.533Z"
+                    }
+                }
             },
-            "clip2": {
-                "body": "user1 clip2 body",
-                "uploadedOn": "2020-05-23T15:06:57.533Z"
+            "2": {
+                
             }
         }
+        
     },
     "user2uid":{
         "email": "user2@email.com",
-        "text": {
-            "clip1": {
-                "body": "user2 clip1 body",
-                "uploadedOn": "2020-05-20T15:06:57.533Z"
-            },
-            "clip2": {
-                "body": "user2 clip2 body",
-                "uploadedOn": "2020-05-23T15:06:57.533Z"
+        "darkTheme": false,
+        "joinDate": "2020-05-20T18:46:59.887Z",
+        "workspace": {
+            "1": {
+                "text": {
+                    "snip1": {
+                        "body": "user2 snip1 body",
+                        "uploadedOn": "2020-05-20T15:06:57.533Z",
+                        "lastUpdatedOn": "2020-05-23T15:06:57.533Z"
+                    },
+                    "snip2": {
+                        "body": "user2 snip2 body",
+                        "uploadedOn": "2020-05-23T15:06:57.533Z",
+                        "lastUpdatedOn": "2020-05-23T15:06:57.533Z"
+                    }
+                }
             }
         }
     }
